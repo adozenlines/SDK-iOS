@@ -56,6 +56,11 @@
  */
 @property (nonatomic, readonly) NSString *uniqueId;
 
+/**
+    manager's API key
+ */
+@property (nonatomic, readonly) NSString *apiKey;
+
 @end
 
 /**
@@ -73,6 +78,7 @@
 @property (nonatomic) NSString *email;
 @property (nonatomic) id<KTKCompany> company;
 @property (nonatomic) NSString *uniqueId;
+@property (nonatomic) NSString *apiKey;
 
 #pragma mark - methods
 

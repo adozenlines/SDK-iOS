@@ -6,25 +6,33 @@
 //  Copyright (c) 2014 kontakt.io. All rights reserved.
 //
 
+#import "KTKVenue.h"
+#import "KTKDevice.h"
+
 @class KTKAction;
 @class KTKPublicAction;
 @class KTKBeacon;
+@class KTKCloudBeacon;
 @class KTKPublicBeacon;
 @class KTKBeaconProfile;
 @class KTKFirmware;
-@class KTKVenue;
 @class KTKPublicVenue;
 @class KTKManager;
 @class KTKUser;
 
+@class KTKPagingBeacons;
+@class KTKPagingDevices;
+@class KTKPagingConfigs;
+@class KTKPagingVenues;
+
 @protocol KTKAction;
 @protocol KTKBeacon;
-@protocol KTKVenue;
 
 extern NSString *const kKTKAdded;
 extern NSString *const kKTKModified;
 extern NSString *const kKTKDeleted;
 extern NSString *const kKTKTimestamp;
+
 
 /**
  KTKClinet provides easy way to use web API methods.
@@ -43,17 +51,43 @@ extern NSString *const kKTKTimestamp;
  */
 @property (copy, nonatomic, readwrite) NSURL *apiUrl;
 
+
 #pragma mark - Management
+
 
 /**
  Returns regions that are used by KTKLocationManager to detect beacons.
  
+ @warning   Don't use it - DEPRECATED
+ @see       - (NSArray *)regionsWithError:(NSError **)error
+ 
  @param error error if operation fails
+ 
  @return array of KTKRegion objects
  */
-- (NSArray *)getRegionsError:(NSError **)error;
+- (NSArray *)getRegionsError:(NSError **)error __deprecated_msg("Use (NSArray *)regionsWithError:(NSError **)error");
+
+/**
+ Returns proximities(NSString objects) that can be used to initialize KTKRegion object
+ 
+ @param error error if operation fails
+ 
+ @return list of proximities
+ */
+- (NSArray *)proximitiesWithError:(NSError **)error;
+
+/**
+ Returns regions(KTKRegion objects) that are used by KTKLocationManager to monitor them and range beacons inside.
+ 
+ @param error error if operation fails
+ 
+ @return list of regions
+ */
+- (NSArray *)regionsWithError:(NSError **)error;
+
 
 #pragma mark - Changelog
+
 
 /**
  Returns venues that were added, changed or deleted since provided point in time.
@@ -105,7 +139,9 @@ extern NSString *const kKTKTimestamp;
  */
 - (NSDictionary *)getActionsForBeacons:(NSArray *)beacons changedSince:(NSUInteger)since error:(NSError **)error;
 
+
 #pragma mark - Action
+
 
 /**
  Returns action object for specified UUID
@@ -148,7 +184,9 @@ extern NSString *const kKTKTimestamp;
  */
 - (BOOL)actionDeleteByUUID:(NSString *)UUID withError:(NSError **)error;
 
+
 #pragma mark - Beacon
+
 
 /**
  Returns beacon which is related to specified unique ID
@@ -161,13 +199,36 @@ extern NSString *const kKTKTimestamp;
 - (KTKBeacon *)beaconByUniqueID:(NSString *)uniqueID withError:(NSError **)error;
 
 /**
- Returns array of beacons which are the properties of manager whose Api Key is provided
+ Returns array of beacons which are the properties of manager whose Api-Key is provided
  
  @param error error if operation fails
  
- @return array of beacons
+ @return array of beacons(KTKBeacon objects)
  */
 - (NSArray *)beaconsWithError:(NSError **)error;
+
+/**
+ Returns array of beacons which are the properties of manager whose Api-Key is provided
+ 
+ @param paging  object which determines set of data that should be returned
+ @param error   error if operation fails
+ 
+ @return array of beacons(KTKBeacon objects)
+ */
+- (NSArray *)beaconsPaged:(KTKPagingBeacons *)paging withError:(NSError **)error;
+
+/**
+ Returns array of beacons which are the properties of manager with indicated UUID
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       beaconsByManagerUUID:withError:
+ 
+ @param managerUUID manager's UUID
+ @param error       error if operation fails
+ 
+ @return array of beacons
+ */
+- (NSArray *)getBeaconsByManagerUUID:(NSString *)managerUUID withError:(NSError **)error __deprecated_msg("Use (NSArray *)beaconsByManagerUUID:(NSString *)managerUUID withError:(NSError **)error");
 
 /**
  Returns array of beacons which are the properties of manager with indicated UUID
@@ -177,27 +238,53 @@ extern NSString *const kKTKTimestamp;
  
  @return array of beacons
  */
-- (NSArray *)getBeaconsByManagerUUID:(NSString *)managerUUID withError:(NSError **)error;
+- (NSArray *)beaconsByManagerUUID:(NSString *)managerUUID withError:(NSError **)error;
 
 /**
  Returns array of beacons which are the properties of indicated manager
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       beaconsForManager:withError:
  
  @param manager manager
  @param error   error if operation fails
 
  @return array of beacons
  */
-- (NSArray *)getBeaconsForManager:(KTKManager *)manager withError:(NSError **)error;
+- (NSArray *)getBeaconsForManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use (NSArray *)beaconsForManager:(KTKManager *)manager withError:(NSError **)error");
+
+/**
+ Returns array of beacons which are the properties of indicated manager
+ 
+ @param manager manager
+ @param error   error if operation fails
+ 
+ @return array of beacons
+ */
+- (NSArray *)beaconsForManager:(KTKManager *)manager withError:(NSError **)error;
 
 /**
  Returns list of beacons which are the properties of indicated managers
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       beaconsForManagers:withError:
  
  @param managers    list of managers
  @param error       error if operation fails
 
  @return list of beacons
  */
-- (NSArray *)getBeaconsForManagers:(NSArray *)managers withError:(NSError **)error;
+- (NSArray *)getBeaconsForManagers:(NSArray *)managers withError:(NSError **)error __deprecated_msg("Use (NSArray *)beaconsForManagers:(NSArray *)managers withError:(NSError **)error");
+
+/**
+ Returns list of beacons which are the properties of indicated managers
+ 
+ @param managers    list of managers
+ @param error       error if operation fails
+ 
+ @return list of beacons
+ */
+- (NSArray *)beaconsForManagers:(NSArray *)managers withError:(NSError **)error;
 
 /**
  Returns beacon for specified UUID, major, minor and published parameteres.
@@ -230,22 +317,63 @@ extern NSString *const kKTKTimestamp;
 /**
  Returns password and master password for beacon with specified uniqueID.
  
+ @warning   Don't use it - DEPRECATED
+ @see       beaconPassword:andMasterPassword:byUniqueId:withError:
+ 
  @param password contains password after operation ends
  @param masterPassword contains master password after operation ends
  @param uniqueID uniqueID of beacon
  
  @return error if operation fails
  */
-- (NSError *)getPassword:(NSString **)password andMasterPassword:(NSString **)masterPassword forBeaconWithUniqueID:(NSString *)uniqueID;
+- (NSError *)getPassword:(NSString **)password andMasterPassword:(NSString **)masterPassword forBeaconWithUniqueID:(NSString *)uniqueID __deprecated_msg("Use (BOOL)beaconPassword:(NSString **)password andMasterPassword:(NSString **)masterPassword byUniqueId:(NSString *)beaconUniqueId withError:(NSError **)error");
+
+/**
+ Gets beacon's password and master password(credentials) by specified unique Id
+ 
+ @param password        beacon's password
+ @param masterPassword  beacon's master password
+ @param beaconUniqueId  beacon's unique Id
+ @param error           error if operation fails
+ 
+ @return YES if getting passwords succeed and NO if not
+ */
+- (BOOL)beaconPassword:(NSString **)password andMasterPassword:(NSString **)masterPassword byUniqueId:(NSString *)beaconUniqueId withError:(NSError **)error;
 
 /**
  Sends information about beacon to the cloud.
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       beaconUpdate:withError:
  
  @param beacon beacon to be saved
  
  @return error if operation fails
  */
-- (NSError *)saveBeacon:(id<KTKBeacon>)beacon;
+- (NSError *)saveBeacon:(id<KTKBeacon>)beacon __deprecated_msg("Use (BOOL)beaconUpdate:(KTKBeacon *)beacon withError:(NSError **)error");
+
+/**
+ Updates beacon properties according to it's uniqueID(required)
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       beaconUpdate:withError:
+ 
+ @param beacon  beacon object which represents current beacon's state
+ @param error   error if operation fails
+ 
+ @return YES if update succeed and NO if not
+ */
+- (BOOL)updateBeacon:(KTKBeacon *)beacon withError:(NSError **)error __deprecated_msg("Use (BOOL)beaconUpdate:(KTKBeacon *)beacon withError:(NSError **)error");
+
+/**
+ Updates beacon properties according to it's uniqueID(required)
+ 
+ @param beacon  beacon object which represents current beacon's state
+ @param error   error if operation fails
+ 
+ @return YES if update succeed and NO if not
+ */
+- (BOOL)beaconUpdate:(KTKBeacon *)beacon withError:(NSError **)error;
 
 /**
  Assigns beacons to specified by UUID venue
@@ -292,38 +420,294 @@ extern NSString *const kKTKTimestamp;
 - (NSArray *)beaconsUnassignedByManagerUUID:(NSString *)managerUUID withError:(NSError **)error;
 
 
-#pragma mark - Beacon Configs
+#pragma mark - Device
 
+
+/**
+ Returns device which matches requested Unique ID
+ 
+ @param uniqueID    device's unique ID
+ @param error       error if operation fails
+ 
+ @return device(KTKBeacon or KTKCloudBeacon) or nil
+ */
+- (id)deviceByUniqueID:(NSString *)uniqueID withError:(NSError **)error;
+
+/**
+ Returns device which matches requested proximity UUID, major and minor - all parameters are REQUIRED
+ 
+ @param proximityUUID   device's proximity UUID
+ @param major           device's major value
+ @param minor           device's minor value
+ @param error           error if operation fails
+ 
+ @return device(KTKBeacon or KTKCloudBeacon) or nil
+ */
+- (id)deviceByProximityUUID:(NSString *)proximityUUID major:(NSNumber *)major andMinor:(NSNumber *)minor withError:(NSError **)error;
+
+/**
+ Returns array of devices which are the properties of manager definied by UUID and they match requested type
+ 
+ @param managerUUID manager's UUID who is the owner of devices
+ @param deviceType  describes which (type of) devices should be returned
+ @param error       error if operation fails
+ 
+ @return array of devices(KTKBeacon or KTKCloudBeacon objects)
+ */
+- (NSArray *)devicesByManagerUUID:(NSString *)managerUUID andType:(KTKDeviceType)deviceType withError:(NSError **)error;
+
+/**
+ Returns array of devices which are the properties of current(by Api-Key) manager and they match requested type
+ 
+ @param deviceType  describes which (type of) devices should be returned
+ @param error       error if operation fails
+ 
+ @return array of devices(KTKBeacon or KTKCloudBeacon objects)
+ */
+- (NSArray *)devicesByType:(KTKDeviceType)deviceType withError:(NSError **)error;
+
+/**
+ Returns set(paged) of devices which are the properties of manager definied by UUID and they match requested type
+ 
+ @param paging      object which determines set of device that will be returned
+ @param managerUUID manager's UUID who is the owner of devices
+ @param deviceType  describes which (type of) devices should be returned
+ @param error       error if operation fails
+ 
+ @return array of devices(KTKBeacon or KTKCloudBeacon objects)
+ */
+- (NSArray *)devicesPaged:(KTKPagingDevices *)paging byManagerUUID:(NSString *)managerUUID andType:(KTKDeviceType)deviceType withError:(NSError **)error;
+
+/**
+ Returns set(paged) of devices which are the properties of current(by Api-Key) manager and they match requested type
+ 
+ @param paging      object which determines set of device that will be returned
+ @param deviceType  describes which (type of) devices should be returned
+ @param error       error if operation fails
+ 
+ @return array of devices(KTKBeacon or KTKCloudBeacon objects)
+ */
+- (NSArray *)devicesPaged:(KTKPagingDevices *)paging byType:(KTKDeviceType)deviceType withError:(NSError **)error;
+
+/**
+ Updates device(Beacon or CloudBeacon) properties according to it's uniqueID(required)
+ 
+ @param device  device object(KTKBeacon or KTKCloudBeacon) with new properties
+ @param error   error if operation fails
+ 
+ @return YES if update succeed and NO if not
+ */
+- (BOOL)deviceUpdate:(id)device withError:(NSError **)error;
+
+/**
+ Assigns device to manager - within the same company
+ 
+ @param deviceUUID  device's UUID
+ @param managerUUID manager's UUID who will be new owner of device
+ @param error       error if operation fails
+ 
+ @return YES if update succeed and NO if not
+ */
+- (BOOL)deviceAssignByUUID:(NSString *)deviceUUID toManagerByUUID:(NSString *)managerUUID withError:(NSError **)error;
+
+/**
+ Assigns device to venue - within the same company
+ 
+ @param deviceUUID  device's UUID
+ @param venueUUID   venue's UUID to which device will be assigned
+ @param error       error if operation fails
+ 
+ @return YES if update succeed and NO if not
+ */
+- (BOOL)deviceAssignByUUID:(NSString *)deviceUUID toVenueByUUID:(NSString *)venueUUID withError:(NSError **)error;
+
+/**
+ Gets device's password and master password(credentials) by specified unique Id
+ 
+ @param password        device's password
+ @param masterPassword  device's master password
+ @param deviceUniqueId  device's unique Id
+ @param error           error if operation fails
+ 
+ @return YES if getting passwords succeed and NO if not
+ */
+- (BOOL)devicePassword:(NSString **)password andMasterPassword:(NSString **)masterPassword byUniqueId:(NSString *)deviceUniqueId withError:(NSError **)error;
+
+/**
+ Moves device's ownership to manager(specified by his/her UUID) from different company
+ 
+ @param uniqueId    device's unique Id
+ @param managerUUID manager's UUID
+ @param error       error if operation fails
+ 
+ @return YES if moving device succeed and NO if not
+ */
+- (BOOL)deviceMoveByUniqueId:(NSString *)uniqueId toManagerByUUID:(NSString *)managerUUID withError:(NSError **)error;
+
+/**
+ Moves device's ownership to manager(specified by his/her UUID) from different company(also by UUID)
+ 
+ @param uniqueId    device's unique Id
+ @param managerUUID manager's UUID
+ @param companyUUID company's UUID - OPTIONAL
+ @param error       error if operation fails
+ 
+ @return YES if moving device succeed and NO if not
+ */
+- (BOOL)deviceMoveByUniqueId:(NSString *)uniqueId toManagerByUUID:(NSString *)managerUUID fromCompanyByUUID:(NSString *)companyUUID withError:(NSError **)error;
+
+/**
+ Moves devices' ownership to manager(specified by his/her UUID) from different company
+ 
+ @param devicesUniqueIds    array of devices' unique Ids(NSStrings)
+ @param managerUUID         manager's UUID
+ @param error               error if operation fails
+ 
+ @return YES if moving devices succeed and NO if not
+ */
+- (BOOL)devicesMove:(NSArray *)devicesUniqueIds toManagerByUUID:(NSString *)managerUUID withError:(NSError **)error;
+
+/**
+ Moves devices' ownership to manager(specified by his/her UUID) from different company(also by UUID)
+ 
+ @param devicesUniqueIds    array of devices' unique Ids(NSStrings)
+ @param managerUUID         manager's UUID
+ @param companyUUID         company's UUID - OPTIONAL
+ @param error               error if operation fails
+ 
+ @return YES if moving devices succeed and NO if not
+ */
+- (BOOL)devicesMove:(NSArray *)devicesUniqueIds toManagerByUUID:(NSString *)managerUUID fromCompanyByUUID:(NSString *)companyUUID withError:(NSError **)error;
+
+/**
+ Returns set of manager's(by UUID) devices specified by type which are unassigned to any venue
+ 
+ @param managerUUID manager's UUID
+ @param deviceType  describes which (type of) devices should be returned
+ @param error       error if operation fails
+ 
+ @return array of unassigned devices(KTKBeacon or KTKCloudBeacon objects)
+ */
+- (NSArray *)devicesUnassignedByManagerUUID:(NSString *)managerUUID andType:(KTKDeviceType)deviceType withError:(NSError **)error;
+
+/**
+ Returns paged set of manager's(by UUID) devices specified by type which are unassigned to any venue
+ 
+ @param paging      object which determines set of data that should be returned
+ @param managerUUID manager's UUID
+ @param deviceType  describes which (type of) devices should be returned
+ @param error       error if operation fails
+ 
+ @return array of unassigned devices(KTKBeacon or KTKCloudBeacon objects)
+ */
+- (NSArray *)devicesUnassignedPaged:(KTKPagingDevices *)paging byManagerUUID:(NSString *)managerUUID andType:(KTKDeviceType)deviceType withError:(NSError **)error;
+
+
+#pragma mark - Configs
+
+
+/**
+ Returns list of devices(their new configs) that requires configuration.
+ 
+ @param deviceType  determines for which type of devices will be getting new configs
+ @param error       error if operation fails
+ 
+ @return list of KTKBeacon/KTKCloudBeacon objects
+ */
+- (NSArray *)configsForDevices:(KTKDeviceType)deviceType withError:(NSError **)error;
+
+/**
+ Returns list of devices(their new configs) that requires configuration.
+ 
+ @param paging      object which determines set of data that should be returned
+ @param deviceType  determines for which type of devices will be getting new configs
+ @param error       error if operation fails
+ 
+ @return list of KTKBeacon/KTKCloudBeacon objects
+ */
+- (NSArray *)configsPaged:(KTKPagingConfigs *)paging forDevices:(KTKDeviceType)deviceType withError:(NSError **)error;
 
 /**
  Returns list of beacons that requires configuration.
  
- @param     error error if operation fails
- @return    list of KTKBeacon objects
+ @warning   Don't use it - DEPRECATED
+ @see       configsForDevices:withError:
+ 
+ @param error error if operation fails
+ 
+ @return list of KTKBeacon objects
  */
-- (NSArray *)getBeaconsToConfigureWithError:(NSError **)error;
+- (NSArray *)getBeaconsToConfigureWithError:(NSError **)error __deprecated_msg("Use (NSArray *)configsForDevices:(KTKDeviceType)deviceType withError:(NSError **)error");
+
+/**
+ Returns config for device with specified unique ID.
+ 
+ @param uniqueID    device unique ID
+ @param error       error if operation fails
+ 
+ @return returns config for device - KTKBeacon or KTKCloudBeacon or nil
+ */
+- (id)configForDeviceByUniqueID:(NSString *)uniqueID withError:(NSError **)error;
+
+/**
+ Creates config for specified KTKBeacon(iBeacon)
+ 
+ @param config  configuration of beacon that we want to apply
+ @param error   error if operation fails
+ 
+ @return true if config was created
+ */
+- (BOOL)configCreateForBeacon:(KTKBeacon *)config withError:(NSError **)error;
+
+/**
+ Creates config for specified KTKCloudBeacon
+ 
+ @param config  configuration of beacon that we want to apply
+ @param error   error if operation fails
+ 
+ @return true if config was created
+ */
+- (BOOL)configCreateForCloudBeacon:(KTKCloudBeacon *)config withError:(NSError **)error;
 
 /**
  Creates config for specified beacon
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       configCreateForBeacon:withError:
  
  @param config  configuration of beacon that we want to apply
  @param error   error if operation fails
  
  @return true if configuartion was created
  */
-- (BOOL)createBeaconConfig:(KTKBeacon *)config withError:(NSError **)error;
+- (BOOL)createBeaconConfig:(KTKBeacon *)config withError:(NSError **)error __deprecated_msg("Use (BOOL)configCreateForBeacon:(KTKBeacon *)config withError:(NSError **)error");
+
 
 #pragma mark - Firmware
 
+
 /**
  Returns information about latest beacons firmware update for a list of specified beacons.
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       firmwaresLatestForBeaconsUniqueIds:withError:
  
  @param beacons set of KTKBeaconDevice objects
  @param error error if operation fails
  
  @return dictionary of KTKFirmware objects indexed by KTKBeaconDevice objects
  */
-- (NSDictionary *)getLatestFirmwareForBeacons:(NSSet *)beacons error:(NSError **)error;
+- (NSDictionary *)getLatestFirmwareForBeacons:(NSSet *)beacons error:(NSError **)error __deprecated_msg("Use (NSDictionary *)firmwaresForBeaconsUniqueIds:(NSArray *)uniqueIds withError:(NSError **)error");
+
+/**
+ Returns information about beacons latest firmwares(updates) for a list of specified beacons unique IDs.
+ 
+ @param uniqueIds   list(NSString objects) of beacons unique IDs
+ @param error       error if operation fails
+ 
+ @return dictionary of KTKFirmware objects indexed by unique IDs of beacons
+ */
+- (NSDictionary *)firmwaresLatestForBeaconsUniqueIds:(NSArray *)uniqueIds withError:(NSError **)error;
 
 /**
  Returns firmware object specified by firmware's name
@@ -371,8 +755,12 @@ extern NSString *const kKTKTimestamp;
 
 #pragma mark - Managers
 
+
 /**
  Authenticates USER by email and password, returns User object/profile with his API key etc
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       managerAuthenticatedByEmail:andPassword:withError:
  
  @param email       user's email
  @param password    user's password
@@ -380,7 +768,31 @@ extern NSString *const kKTKTimestamp;
  
  @return user object if request succeeded
  */
-- (KTKUser *)getAuthenticatedUserByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error;
+- (KTKUser *)getAuthenticatedUserByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error __deprecated_msg("Use (KTKManager *)managerAuthenticatedByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error");
+
+/**
+ Authenticates Manager by email and password and returns Manager object with his Api-Key etc.
+ 
+ @param email       user's email
+ @param password    user's password
+ @param error       error if operation fails
+ 
+ @return manager object if request succeed
+ */
+- (KTKManager *)managerAuthenticatedByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error;
+
+/**
+ Creates manager based on KTKManager object
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       managerCreate:withError:
+ 
+ @param manager     manager who will be created
+ @param error       error if operation fails
+ 
+ @return true if manager was created successfully
+ */
+- (BOOL)createManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use (BOOL)managerCreate:(KTKManager *)manager withError:(NSError **)error");
 
 /**
  Creates manager based on KTKManager object
@@ -390,40 +802,82 @@ extern NSString *const kKTKTimestamp;
  
  @return true if manager was created successfully
  */
-- (BOOL)createManager:(KTKManager *)manager withError:(NSError **)error;
+- (KTKManager *)managerCreate:(KTKManager *)manager withError:(NSError **)error;
 
 /**
  Updates manager settings based on KTKManager object
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       managerUpdate:withError:
  
  @param manager     manager who will be updated with current settings
  @param error       error if operation fails
  
  @return true if manager was updated successfully
  */
-- (BOOL)updateManager:(KTKManager *)manager withError:(NSError **)error;
+- (BOOL)updateManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use (BOOL)managerUpdate:(KTKManager *)manager withError:(NSError **)error");
+
+/**
+ Updates manager properties based on KTKManager object
+ 
+ @param manager     manager who will be updated with current settings
+ @param error       error if operation fails
+ 
+ @return true if manager was updated successfully
+ */
+- (BOOL)managerUpdate:(KTKManager *)manager withError:(NSError **)error;
 
 /**
  Deletes manager based on manager's UUID
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       managerDeleteByUUID:withError:
  
  @param UUID        manager's UUID who will be deleted
  @param error       error if operation fails
  
  @return true if manager was deleted successfully
  */
-- (BOOL)deleteManagerWithUUID:(NSString *)UUID withError:(NSError **)error;
+- (BOOL)deleteManagerWithUUID:(NSString *)UUID withError:(NSError **)error __deprecated_msg("Use (BOOL)managerDeleteByUUID:(NSString *)managerUUID withError:(NSError **)error");
+
+/**
+ Deletes manager by his/her UUID
+ 
+ @param managerUUID manager's UUID who will be deleted
+ @param error       error if operation fails
+ 
+ @return true if manager was deleted successfully
+ */
+- (BOOL)managerDeleteByUUID:(NSString *)managerUUID withError:(NSError **)error;
 
 /**
  Deletes manager based on KTKManager object
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       managerDelete:withError:
  
  @param manager     manager who will be deleted
  @param error       error if operation fails
  
  @return true if manager was deleted successfully
  */
-- (BOOL)deleteManager:(KTKManager *)manager withError:(NSError **)error;
+- (BOOL)deleteManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use (BOOL)managerDelete:(KTKManager *)manager withError:(NSError **)error");
+
+/**
+ Deletes manager based on KTKManager object
+ 
+ @param manager manager who will be deleted
+ @param error   error if operation fails
+ 
+ @return true if manager was deleted successfully
+ */
+- (BOOL)managerDelete:(KTKManager *)manager withError:(NSError **)error;
 
 /**
  Assigns managers to supervisor(manager) with specified UUID
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       managersAssign:toSupervisorWithUUID:withError:
  
  @param managers    array of managers(KTKManager) who should be assigned
  @param UUID        supervisor's UUID to whom managers should be assigned
@@ -431,36 +885,85 @@ extern NSString *const kKTKTimestamp;
  
  @return true if managers were assigned successfully
  */
-- (BOOL)assignManagers:(NSArray *)managers toSupervisorWithUUID:(NSString *)UUID withError:(NSError **)error;
+- (BOOL)assignManagers:(NSArray *)managers toSupervisorWithUUID:(NSString *)UUID withError:(NSError **)error __deprecated_msg("Use (BOOL)managersAssign:(NSArray *)managers toSupervisorWithUUID:(NSString *)supervisorUUID withError:(NSError **)error");
+
+/**
+ Assigns managers to supervisor(manager) with specified UUID
+ 
+ @param managers        array of managers(KTKManager objects) who should be assigned
+ @param supervisorUUID  supervisor's UUID to whom managers should be assigned
+ @param error           error if operation fails
+ 
+ @return true if managers were assigned successfully
+ */
+- (BOOL)managersAssign:(NSArray *)managers toSupervisorWithUUID:(NSString *)supervisorUUID withError:(NSError **)error;
 
 /**
  Returns list of managers
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       managersAssign:toSupervisorWithUUID:withError:
  
  @param error error if operation fails
  
  @return array which is list of managers
  */
-- (NSArray *)getManagersWithError:(NSError **)error;
+- (NSArray *)getManagersWithError:(NSError **)error __deprecated_msg("Use (BOOL)managersAssign:(NSArray *)managers toSupervisorWithUUID:(NSString *)supervisorUUID withError:(NSError **)error");
+
+/**
+ Returns list of managers(KTKManager objects)
+ 
+ @param error error if operation fails
+ 
+ @return list of managers
+ */
+- (NSArray *)managersWithError:(NSError **)error;
 
 /**
  Returns manager with specified UUID
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       - (KTKManager *)managerByUUID:(NSString *)managerUUID withError:(NSError **)error
  
  @param UUID    manager's UUID
  @param error   error if operation fails
  
  @return manager with specified UUID
  */
-- (KTKManager *)getManagerWithUUID:(NSString *)UUID withError:(NSError **)error;
+- (KTKManager *)getManagerWithUUID:(NSString *)UUID withError:(NSError **)error __deprecated_msg("Use (KTKManager *)managerByUUID:(NSString *)managerUUID withError:(NSError **)error");
+
+/**
+ Returns manager(KTKManager) with specified UUID
+ 
+ @param managerUUID manager's UUID
+ @param error       error if operation fails
+ 
+ @return manager if there was the one that matches specified UUID
+ */
+- (KTKManager *)managerByUUID:(NSString *)managerUUID withError:(NSError **)error;
 
 /**
  Returns list of subordinates
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       managerSubordinatesByUUID:withError:
  
  @param UUID manager's UUID
  @param error error if operation fails
  
  @return array which is list of manager's subordinates
  */
-- (NSArray *)getSubordinatesForManagerByUUID:(NSUUID *)UUID withError:(NSError **)error;
+- (NSArray *)getSubordinatesForManagerByUUID:(NSUUID *)UUID withError:(NSError **)error __deprecated_msg("Use (NSArray *)managerSubordinatesByUUID:(NSUUID *)managerUUID withError:(NSError **)error");
+
+/**
+ Returns list of manager's subordinates(KTKSubordinate objects)
+ 
+ @param managerUUID manager's UUID
+ @param error       error if operation fails
+ 
+ @return array which is list of manager's subordinates
+ */
+- (NSArray *)managerSubordinatesByUUID:(NSString *)managerUUID withError:(NSError **)error;
 
 
 #pragma mark - Venues
@@ -495,6 +998,39 @@ extern NSString *const kKTKTimestamp;
  @return array of venues
  */
 - (NSArray *)venuesWithError:(NSError **)error;
+
+/**
+ Returns array of venues(KTKVenue objects) for manager(whose UUID was passed) and venues' type(optional - default private)
+ 
+ @param managerUUID manager's UUID
+ @param venueType   venue's type
+ @param error       error if operation fails
+ 
+ @return array of venues that met selection criteria
+ */
+- (NSArray *)venuesByManagerUUID:(NSString *)managerUUID andType:(KTKVenueType)venueType withError:(NSError **)error;
+
+/**
+ Returns array of venues which are the properties of manager whose Api-Key is provided
+ 
+ @param paging  object which determines set of data that should be returned
+ @param error   error if operation fails
+ 
+ @return array of venues(KTKVenue objects)
+ */
+- (NSArray *)venuesPaged:(KTKPagingVenues *)paging withError:(NSError **)error;
+
+/**
+ Returns array of venues(KTKVenue objects) for manager(whose UUID was passed) and venues' type(optional - default private)
+
+ @param paging      object which determines set of data that should be returned
+ @param managerUUID manager's UUID
+ @param venueType   venue's type
+ @param error       error if operation fails
+ 
+ @return array of venues that met selection criteria
+ */
+- (NSArray *)venuesPaged:(KTKPagingVenues *)paging byManagerUUID:(NSString *)managerUUID andType:(KTKVenueType)venueType withError:(NSError **)error;
 
 /**
  Returns BOOL value which tells if CREATE venue operation succeeded
@@ -617,6 +1153,7 @@ extern NSString *const kKTKTimestamp;
  
  @param     category    endpoint's category like @"manager"
  @param     subcategory endpoint's subcategory(which is related to its category) like @"authenticate"
+ 
  @return    return      signed request
  */
 - (NSMutableURLRequest *)createRequestWithoutApiKeyToEndpointCategory:(NSString *)category
@@ -627,6 +1164,7 @@ extern NSString *const kKTKTimestamp;
  
  @param     category    endpoint's category like @"action"
  @param     subcategory endpoint's subcategory(which is related to its category) like @":id/content"
+ 
  @return    return      signed request
  */
 - (NSMutableURLRequest *)createRequestToEndpointCategory:(NSString *)category andSubcategory:(NSString *)subcategory;
@@ -635,6 +1173,7 @@ extern NSString *const kKTKTimestamp;
  Returns properly signed request to specified endpoint. You can use this method to create custom requests.
  
  @param endpoint endpoint
+ 
  @return return signed request
  */
 - (NSMutableURLRequest *)createRequestToEndpoint:(NSString *)endpoint;
@@ -644,6 +1183,7 @@ extern NSString *const kKTKTimestamp;
  
  @param request request to be sent
  @param error error if opertaion fails
+ 
  @return data returned by API
  */
 - (NSData *)sendRequest:(NSURLRequest *)request error:(NSError **)error;

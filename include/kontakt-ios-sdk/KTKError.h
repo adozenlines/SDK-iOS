@@ -21,9 +21,29 @@ typedef NS_ENUM(int, KTKErrorCode) {
     KTKErrorCodeConnectionFailed,
     
     /**
+     Web API responded with 4xx - client error
+     */
+    KTKErrorCodeClientError,
+    
+    /**
+     Web API responded with 403 - forbidden access
+     */
+    KTKErrorCodeResourceForbidden,
+    
+    /**
      Web API didn't found requested resource.
      */
     KTKErrorCodeResourceNotFound,
+    
+    /**
+     Web API responded with 422 - validation error
+     */
+    KTKErrorCodeValidationFailed,
+    
+    /**
+     Web API responded with 5xx - server error
+     */
+    KTKErrorCodeServerError,
     
     /**
      KTKConverter did failed to convert value.

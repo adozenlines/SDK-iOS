@@ -11,7 +11,7 @@
 @protocol KTKVenue;
 
 /**
- KTKBeacon is a protocol that should be implemented by any object that represents a beacon.
+ KTKBeacon is a protocol that should be implemented by any object that represents a beacon or its config.
  */
 @protocol KTKBeacon <KTKDataTransferObject>
 
@@ -65,6 +65,11 @@
  */
 @property (strong, nonatomic, readonly) NSString *proximity;
 
+/**
+ Beacon's manager(owner) UUID
+ */
+@property (strong, nonatomic, readonly) NSString *managerUUID;
+
 @optional
 
 /**
@@ -80,13 +85,12 @@
 @end
 
 /**
- KTKBeacon is a class representing a beacon.
+ KTKBeacon is a class representing a beacon or its config.
  */
 @interface KTKBeacon : KTKDataTransferObject <KTKBeacon>
 
 #pragma mark - properties
 
-@property (strong, nonatomic, readwrite) NSSet *actions;
 @property (strong, nonatomic, readwrite) NSString *alias;
 @property (strong, nonatomic, readwrite) NSString *firmware;
 @property (strong, nonatomic, readwrite) NSNumber *interval;
@@ -97,6 +101,8 @@
 @property (strong, nonatomic, readwrite) NSString *password;
 @property (strong, nonatomic, readwrite) NSNumber *power;
 @property (strong, nonatomic, readwrite) NSString *proximity;
+@property (strong, nonatomic, readwrite) NSString *managerUUID;
+@property (strong, nonatomic, readwrite) NSSet *actions;
 @property (strong, nonatomic, readwrite) id<KTKVenue> venue;
 
 @end

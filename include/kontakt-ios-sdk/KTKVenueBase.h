@@ -8,6 +8,23 @@
 
 #import "KTKDataTransferObject.h"
 
+
+/**
+ Venue Type possible values
+ */
+typedef NS_ENUM(NSUInteger, KTKVenueType)
+{
+    /**
+     Venue type Private - default
+     */
+    KTKVenueTypePrivate,
+    
+    /**
+     Venue type Public
+     */
+    KTKVenueTypePublic
+};
+
 /**
  KTKVenueBase is a protocol that should be implemented by any class that represents venue.
  */
@@ -59,5 +76,14 @@
 @property (strong, nonatomic, readwrite) NSString *coverType;
 @property (nonatomic, readwrite)         NSUInteger beaconsCount;
 @property (strong, nonatomic, readwrite) NSSet *beacons;
+
+/**
+ Returns Venue Type as string - for requests etc.
+ 
+ @param venueType venue's type
+ 
+ @return string that is adequate to given type - Private(default)
+ */
++ (NSString *)venueTypeAsString:(KTKVenueType)venueType;
 
 @end
