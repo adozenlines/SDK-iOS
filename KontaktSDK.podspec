@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.homepage              = "http://docs.kontakt.io/ios-sdk/quickstart/"
   s.author                = { "Kontakt.io" => "http://kontakt.io" }
   s.platform              = :ios, '7.0'
-  s.source                = { :git => "https://github.com/kontaktio/SDK-iOS", :tag => s.version.to_s }
+  s.source                = { :git => "https://github.com/kontaktio/SDK-iOS.git", :tag => s.version.to_s }
   s.source_files          = 'KontaktSDK/Headers/*.h'
   s.preserve_paths        = 'KontaktSDK/libkontakt-ios-sdk.a'
   s.vendored_libraries    = 'KontaktSDK/libkontakt-ios-sdk.a'
