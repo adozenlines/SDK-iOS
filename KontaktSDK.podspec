@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name                  = " "
+  s.name                  = "KontaktSDK"
   s.version               = "5.0"
   s.summary               = "Kontakt.io iOS SDK Library"
   s.homepage              = "http://docs.kontakt.io/ios-sdk/quickstart/"
