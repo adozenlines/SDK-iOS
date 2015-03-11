@@ -99,11 +99,14 @@ extern NSString *const kKTKTimestamp;
  * kKTKDeleted - array of deleted venues
  * kKTKTimestamp - current server timestamp
  
+ @warning   Don't use it - DEPRECATED
+ @see       venuesWithError:
+ 
  @param since point in time, put 0 to get all venues
  @param error error if operation fails
  @return dictionary of KTKVenue objects
  */
-- (NSDictionary *)getVenuesChangedSince:(NSUInteger)since error:(NSError **)error;
+- (NSDictionary *)getVenuesChangedSince:(NSUInteger)since error:(NSError **)error __deprecated_msg("Use - (NSArray *)venuesWithError:(NSError **)error");
 
 /**
  Returns venues assigned to a venue that were added, changed or deleted since provided point in time.
@@ -115,12 +118,15 @@ extern NSString *const kKTKTimestamp;
  * kKTKDeleted - array of deleted beacons
  * kKTKTimestamp - current server timestamp
  
+ @warning   Don't use it - DEPRECATED
+ @see       beaconsWithError:
+ 
  @param venues venues array for which get beacons
  @param since point in time, put 0 to get all beacons
  @param error error if operation fails
  @return dictionary of KTKBeacon objects
  */
-- (NSDictionary *)getBeaconsForVenues:(NSArray *)venues changedSince:(NSUInteger)since error:(NSError **)error;
+- (NSDictionary *)getBeaconsForVenues:(NSArray *)venues changedSince:(NSUInteger)since error:(NSError **)error __deprecated_msg("Use - (NSArray *)beaconsWithError:(NSError **)error");
 
 /**
  Returns actions assigned to a beacon that were added, changed or deleted since provided point in time.
@@ -132,12 +138,15 @@ extern NSString *const kKTKTimestamp;
  * kKTKDeleted - array of deleted actions
  * kKTKTimestamp - current server timestamp
  
+ @warning   Don't use it - DEPRECATED
+ @see       actionByUUID:withError:
+ 
  @param beacons beacons array(KTKBeacon object(s)) for which get actions
  @param since point in time, put 0 to get all actions
  @param error error error if operation fails
  @return dictionary of KTKAction objects
  */
-- (NSDictionary *)getActionsForBeacons:(NSArray *)beacons changedSince:(NSUInteger)since error:(NSError **)error;
+- (NSDictionary *)getActionsForBeacons:(NSArray *)beacons changedSince:(NSUInteger)since error:(NSError **)error __deprecated_msg("Use - (KTKAction *)actionByUUID:(NSString *)UUID withError:(NSError **)error");
 
 
 #pragma mark - Action
@@ -228,7 +237,7 @@ extern NSString *const kKTKTimestamp;
  
  @return array of beacons
  */
-- (NSArray *)getBeaconsByManagerUUID:(NSString *)managerUUID withError:(NSError **)error __deprecated_msg("Use (NSArray *)beaconsByManagerUUID:(NSString *)managerUUID withError:(NSError **)error");
+- (NSArray *)getBeaconsByManagerUUID:(NSString *)managerUUID withError:(NSError **)error __deprecated_msg("Use - (NSArray *)beaconsByManagerUUID:(NSString *)managerUUID withError:(NSError **)error");
 
 /**
  Returns array of beacons which are the properties of manager with indicated UUID
@@ -251,7 +260,7 @@ extern NSString *const kKTKTimestamp;
 
  @return array of beacons
  */
-- (NSArray *)getBeaconsForManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use (NSArray *)beaconsForManager:(KTKManager *)manager withError:(NSError **)error");
+- (NSArray *)getBeaconsForManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use - (NSArray *)beaconsForManager:(KTKManager *)manager withError:(NSError **)error");
 
 /**
  Returns array of beacons which are the properties of indicated manager
@@ -274,7 +283,7 @@ extern NSString *const kKTKTimestamp;
 
  @return list of beacons
  */
-- (NSArray *)getBeaconsForManagers:(NSArray *)managers withError:(NSError **)error __deprecated_msg("Use (NSArray *)beaconsForManagers:(NSArray *)managers withError:(NSError **)error");
+- (NSArray *)getBeaconsForManagers:(NSArray *)managers withError:(NSError **)error __deprecated_msg("Use - (NSArray *)beaconsForManagers:(NSArray *)managers withError:(NSError **)error");
 
 /**
  Returns list of beacons which are the properties of indicated managers
@@ -326,7 +335,7 @@ extern NSString *const kKTKTimestamp;
  
  @return error if operation fails
  */
-- (NSError *)getPassword:(NSString **)password andMasterPassword:(NSString **)masterPassword forBeaconWithUniqueID:(NSString *)uniqueID __deprecated_msg("Use (BOOL)beaconPassword:(NSString **)password andMasterPassword:(NSString **)masterPassword byUniqueId:(NSString *)beaconUniqueId withError:(NSError **)error");
+- (NSError *)getPassword:(NSString **)password andMasterPassword:(NSString **)masterPassword forBeaconWithUniqueID:(NSString *)uniqueID __deprecated_msg("Use - (BOOL)beaconPassword:(NSString **)password andMasterPassword:(NSString **)masterPassword byUniqueId:(NSString *)beaconUniqueId withError:(NSError **)error");
 
 /**
  Gets beacon's password and master password(credentials) by specified unique Id
@@ -350,7 +359,7 @@ extern NSString *const kKTKTimestamp;
  
  @return error if operation fails
  */
-- (NSError *)saveBeacon:(id<KTKBeacon>)beacon __deprecated_msg("Use (BOOL)beaconUpdate:(KTKBeacon *)beacon withError:(NSError **)error");
+- (NSError *)saveBeacon:(id<KTKBeacon>)beacon __deprecated_msg("Use - (BOOL)beaconUpdate:(KTKBeacon *)beacon withError:(NSError **)error");
 
 /**
  Updates beacon properties according to it's uniqueID(required)
@@ -363,7 +372,7 @@ extern NSString *const kKTKTimestamp;
  
  @return YES if update succeed and NO if not
  */
-- (BOOL)updateBeacon:(KTKBeacon *)beacon withError:(NSError **)error __deprecated_msg("Use (BOOL)beaconUpdate:(KTKBeacon *)beacon withError:(NSError **)error");
+- (BOOL)updateBeacon:(KTKBeacon *)beacon withError:(NSError **)error __deprecated_msg("Use - (BOOL)beaconUpdate:(KTKBeacon *)beacon withError:(NSError **)error");
 
 /**
  Updates beacon properties according to it's uniqueID(required)
@@ -637,7 +646,7 @@ extern NSString *const kKTKTimestamp;
  
  @return list of KTKBeacon objects
  */
-- (NSArray *)getBeaconsToConfigureWithError:(NSError **)error __deprecated_msg("Use (NSArray *)configsForDevices:(KTKDeviceType)deviceType withError:(NSError **)error");
+- (NSArray *)getBeaconsToConfigureWithError:(NSError **)error __deprecated_msg("Use - (NSArray *)configsForDevices:(KTKDeviceType)deviceType withError:(NSError **)error");
 
 /**
  Returns config for device with specified unique ID.
@@ -680,7 +689,7 @@ extern NSString *const kKTKTimestamp;
  
  @return true if configuartion was created
  */
-- (BOOL)createBeaconConfig:(KTKBeacon *)config withError:(NSError **)error __deprecated_msg("Use (BOOL)configCreateForBeacon:(KTKBeacon *)config withError:(NSError **)error");
+- (BOOL)createBeaconConfig:(KTKBeacon *)config withError:(NSError **)error __deprecated_msg("Use - (BOOL)configCreateForBeacon:(KTKBeacon *)config withError:(NSError **)error");
 
 
 #pragma mark - Firmware
@@ -697,7 +706,7 @@ extern NSString *const kKTKTimestamp;
  
  @return dictionary of KTKFirmware objects indexed by KTKBeaconDevice objects
  */
-- (NSDictionary *)getLatestFirmwareForBeacons:(NSSet *)beacons error:(NSError **)error __deprecated_msg("Use (NSDictionary *)firmwaresForBeaconsUniqueIds:(NSArray *)uniqueIds withError:(NSError **)error");
+- (NSDictionary *)getLatestFirmwareForBeacons:(NSSet *)beacons error:(NSError **)error __deprecated_msg("Use - (NSDictionary *)firmwaresForBeaconsUniqueIds:(NSArray *)uniqueIds withError:(NSError **)error");
 
 /**
  Returns information about beacons latest firmwares(updates) for a list of specified beacons unique IDs.
@@ -768,7 +777,7 @@ extern NSString *const kKTKTimestamp;
  
  @return user object if request succeeded
  */
-- (KTKUser *)getAuthenticatedUserByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error __deprecated_msg("Use (KTKManager *)managerAuthenticatedByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error");
+- (KTKUser *)getAuthenticatedUserByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error __deprecated_msg("Use - (KTKManager *)managerAuthenticatedByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error");
 
 /**
  Authenticates Manager by email and password and returns Manager object with his Api-Key etc.
@@ -792,7 +801,7 @@ extern NSString *const kKTKTimestamp;
  
  @return true if manager was created successfully
  */
-- (BOOL)createManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use (BOOL)managerCreate:(KTKManager *)manager withError:(NSError **)error");
+- (BOOL)createManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use - (BOOL)managerCreate:(KTKManager *)manager withError:(NSError **)error");
 
 /**
  Creates manager based on KTKManager object
@@ -815,7 +824,7 @@ extern NSString *const kKTKTimestamp;
  
  @return true if manager was updated successfully
  */
-- (BOOL)updateManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use (BOOL)managerUpdate:(KTKManager *)manager withError:(NSError **)error");
+- (BOOL)updateManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use - (BOOL)managerUpdate:(KTKManager *)manager withError:(NSError **)error");
 
 /**
  Updates manager properties based on KTKManager object
@@ -838,7 +847,7 @@ extern NSString *const kKTKTimestamp;
  
  @return true if manager was deleted successfully
  */
-- (BOOL)deleteManagerWithUUID:(NSString *)UUID withError:(NSError **)error __deprecated_msg("Use (BOOL)managerDeleteByUUID:(NSString *)managerUUID withError:(NSError **)error");
+- (BOOL)deleteManagerWithUUID:(NSString *)UUID withError:(NSError **)error __deprecated_msg("Use - (BOOL)managerDeleteByUUID:(NSString *)managerUUID withError:(NSError **)error");
 
 /**
  Deletes manager by his/her UUID
@@ -861,7 +870,7 @@ extern NSString *const kKTKTimestamp;
  
  @return true if manager was deleted successfully
  */
-- (BOOL)deleteManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use (BOOL)managerDelete:(KTKManager *)manager withError:(NSError **)error");
+- (BOOL)deleteManager:(KTKManager *)manager withError:(NSError **)error __deprecated_msg("Use - (BOOL)managerDelete:(KTKManager *)manager withError:(NSError **)error");
 
 /**
  Deletes manager based on KTKManager object
@@ -885,7 +894,7 @@ extern NSString *const kKTKTimestamp;
  
  @return true if managers were assigned successfully
  */
-- (BOOL)assignManagers:(NSArray *)managers toSupervisorWithUUID:(NSString *)UUID withError:(NSError **)error __deprecated_msg("Use (BOOL)managersAssign:(NSArray *)managers toSupervisorWithUUID:(NSString *)supervisorUUID withError:(NSError **)error");
+- (BOOL)assignManagers:(NSArray *)managers toSupervisorWithUUID:(NSString *)UUID withError:(NSError **)error __deprecated_msg("Use - (BOOL)managersAssign:(NSArray *)managers toSupervisorWithUUID:(NSString *)supervisorUUID withError:(NSError **)error");
 
 /**
  Assigns managers to supervisor(manager) with specified UUID
@@ -908,7 +917,7 @@ extern NSString *const kKTKTimestamp;
  
  @return array which is list of managers
  */
-- (NSArray *)getManagersWithError:(NSError **)error __deprecated_msg("Use (BOOL)managersAssign:(NSArray *)managers toSupervisorWithUUID:(NSString *)supervisorUUID withError:(NSError **)error");
+- (NSArray *)getManagersWithError:(NSError **)error __deprecated_msg("Use - (BOOL)managersAssign:(NSArray *)managers toSupervisorWithUUID:(NSString *)supervisorUUID withError:(NSError **)error");
 
 /**
  Returns list of managers(KTKManager objects)
@@ -930,7 +939,7 @@ extern NSString *const kKTKTimestamp;
  
  @return manager with specified UUID
  */
-- (KTKManager *)getManagerWithUUID:(NSString *)UUID withError:(NSError **)error __deprecated_msg("Use (KTKManager *)managerByUUID:(NSString *)managerUUID withError:(NSError **)error");
+- (KTKManager *)getManagerWithUUID:(NSString *)UUID withError:(NSError **)error __deprecated_msg("Use - (KTKManager *)managerByUUID:(NSString *)managerUUID withError:(NSError **)error");
 
 /**
  Returns manager(KTKManager) with specified UUID
@@ -953,7 +962,7 @@ extern NSString *const kKTKTimestamp;
  
  @return array which is list of manager's subordinates
  */
-- (NSArray *)getSubordinatesForManagerByUUID:(NSUUID *)UUID withError:(NSError **)error __deprecated_msg("Use (NSArray *)managerSubordinatesByUUID:(NSUUID *)managerUUID withError:(NSError **)error");
+- (NSArray *)getSubordinatesForManagerByUUID:(NSUUID *)UUID withError:(NSError **)error __deprecated_msg("Use - (NSArray *)managerSubordinatesByUUID:(NSUUID *)managerUUID withError:(NSError **)error");
 
 /**
  Returns list of manager's subordinates(KTKSubordinate objects)

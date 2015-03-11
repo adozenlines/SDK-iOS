@@ -35,19 +35,48 @@
 #pragma mark - public methods
 
 /**
+ Connects to device with specified password
+ 
+ @param password beacon's security password
+ 
+ @return YES if connection operation suceeded - NO if not
+ */
+- (BOOL)connectWithPassword:(NSString *)password andError:(NSError **)error;
+
+/**
+ Can be used for pre-checking if password format is valid
+ 
+ @param password beacon's security password
+ 
+ @return YES if password format is valid - NO if not
+ */
+- (BOOL)isPasswordFormatValid:(NSString *)password;
+
+/**
+ Disconnects from device.
+ */
+- (void)disconnect;
+
+/**
  Authorizes connection to the beacon using password set by setPassword: method.
+ 
+ @warning   Don't use it - DEPRECATED
+ @see       connectWithPassword:andError:
  
  @return error if opertion fails
  */
-- (NSError *)authorize;
+- (NSError *)authorize __deprecated_msg("Use - (BOOL)connectWithPassword:(NSString *)password andError:(NSError **)error");
 
 /**
  Sets password used to authorize connection to the beacon.
  
+ @warning   Don't use it - DEPRECATED
+ @see       connectWithPassword:andError:
+ 
  @param password password for the beacon
  @return error if operation fails
  */
-- (NSError *)setPassword:(NSString *)password;
+- (NSError *)setPassword:(NSString *)password __deprecated_msg("Use - (BOOL)connectWithPassword:(NSString *)password andError:(NSError **)error");
 
 /**
  Returns characteristic descriptor for a specific characteristic kind.
