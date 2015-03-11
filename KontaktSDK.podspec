@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = "KontaktSDK"
-  s.version               = "5.0"
+  s.version               = "5.1"
   s.summary               = "Kontakt.io iOS SDK Library"
   s.homepage              = "http://docs.kontakt.io/ios-sdk/quickstart/"
   s.author                = { "Kontakt.io" => "http://kontakt.io" }
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.license      = {
     :type => 'Copyright',
     :text => <<-LICENSE
-      Copyright (c) 2014 Kontakt.io. All rights reserved.
+      Copyright (c) 2015 Kontakt.io. All rights reserved.
       LICENSE
   }
 end
