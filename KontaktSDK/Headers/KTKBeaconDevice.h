@@ -37,7 +37,8 @@
 /**
  Connects to device with specified password
  
- @param password beacon's security password
+ @param password    beacon's security password
+ @param error       error if operation fails
  
  @return YES if connection operation suceeded - NO if not
  */

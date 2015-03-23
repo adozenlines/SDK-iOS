@@ -7,7 +7,7 @@
 //
 
 
-#define KONTAKT_SDK_VERSION @"5.1"
+#define KONTAKT_SDK_VERSION @"5.2"
 
 //API
 #import "KTKClient.h"
