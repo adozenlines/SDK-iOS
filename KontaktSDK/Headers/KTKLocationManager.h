@@ -19,7 +19,7 @@ typedef NS_ENUM(int, KTKLocationManagerState) {
     KTKLocationManagerStateInactive,
     
     /**
-     Location manager is preparing to monitro beacons.
+     Location manager is preparing to monitor beacons.
      */
     KTKLocationManagerStateInitializing,
     
