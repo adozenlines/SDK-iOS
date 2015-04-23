@@ -82,7 +82,7 @@ typedef NS_ENUM(int, KTKLocationManagerState) {
 #pragma mark - class methods
 
 /**
- Boleaon value indicating if device is capable of monitoring beacons.
+ Boolean value indicating if device is capable of monitoring beacons.
  */
 + (BOOL)canMonitorBeacons;
 
