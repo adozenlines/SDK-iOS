@@ -64,7 +64,7 @@
 @end
 
 /**
-    KTKCompany is a class represnting manager
+    KTKCompany is a class representing manager
  */
 @interface KTKManager : KTKDataTransferObject<KTKManager>
 
@@ -90,7 +90,7 @@
  @param email       manager's email
  @param role        manager's role
  
- @return initailized manager object
+ @return initialized manager object
  */
 - (id)initWithFirstName:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email role:(NSString *)role;
 
