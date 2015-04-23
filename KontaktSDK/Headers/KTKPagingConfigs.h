@@ -15,42 +15,42 @@
 typedef NS_ENUM(NSUInteger, KTKConfigsOrderBy)
 {    
     /**
-     Configs oredered by Created date - default
+     Configs ordered by Created date - default
      */
     KTKConfigsOrderByCreated,
     
     /**
-     Configs oredered by Updated date
+     Configs ordered by Updated date
      */
     KTKConfigsOrderByUpdated,
     
     /**
-     Configs oredered by Proximity
+     Configs ordered by Proximity
      */
     KTKConfigsOrderByProximity,
     
     /**
-     Configs oredered by Major
+     Configs ordered by Major
      */
     KTKConfigsOrderByMajor,
     
     /**
-     Configs oredered by Minor
+     Configs ordered by Minor
      */
     KTKConfigsOrderByMinor,
     
     /**
-     Configs oredered by Unique ID
+     Configs ordered by Unique ID
      */
     KTKConfigsOrderByUniqueId,
     
     /**
-     Configs oredered by TX Power
+     Configs ordered by TX Power
      */
     KTKConfigsOrderByTxPower,
     
     /**
-     Configs oredered by Interval
+     Configs ordered by Interval
      */
     KTKConfigsOrderByInterval
 };
