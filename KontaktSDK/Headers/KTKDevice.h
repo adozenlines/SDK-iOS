@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, KTKDeviceType)
 /**
  Returns device type as string that is used in requests
 
- @param deviceType  device's type
+ @param deviceType device's type
  
  @return device type as a string
  */
@@ -42,7 +42,7 @@ typedef NS_ENUM(NSUInteger, KTKDeviceType)
 /**
  Returns device type as enum that is used in methods that are related to devices types etc.
  
- @param deviceTypeString    device's type as a string
+ @param deviceTypeString device's type as a string
  
  @return device type as enum
  */
