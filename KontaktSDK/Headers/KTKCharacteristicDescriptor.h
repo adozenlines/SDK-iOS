@@ -30,7 +30,7 @@ extern NSString *const kKTKCharacteristicDescriptorTypeDefault;
 extern NSString *const kKTKCharacteristicDescriptorTypeBootloader;
 
 /**
- KTKCharacteristicDescriptor is an class that represents a specific bluetooth characteristic. It allows to refer to device characteristic by convinient type rather than its UUID.
+ KTKCharacteristicDescriptor is an class that represents a specific bluetooth characteristic. It allows to refer to device characteristic by convenient type rather than its UUID.
  
  Predefined characteristics types are:
  

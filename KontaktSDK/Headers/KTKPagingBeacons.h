@@ -17,47 +17,47 @@
 typedef NS_ENUM(NSUInteger, KTKBeaconsOrderBy)
 {
     /**
-     Beacons oredered by Created date - default
+     Beacons ordered by Created date - default
      */
     KTKBeaconsOrderByCreated,
     
     /**
-     Beacons oredered by Updated date
+     Beacons ordered by Updated date
      */
     KTKBeaconsOrderByUpdated,
     
     /**
-     Beacons oredered by Name
+     Beacons ordered by Name
      */
     KTKBeaconsOrderByName,
     
     /**
-     Beacons oredered by Unique ID
+     Beacons ordered by Unique ID
      */
     KTKBeaconsOrderByUniqueId,
     
     /**
-     Beacons oredered by Alias
+     Beacons ordered by Alias
      */
     KTKBeaconsOrderByAlias,
     
     /**
-     Beacons oredered by Proximity
+     Beacons ordered by Proximity
      */
     KTKBeaconsOrderByProximity,
     
     /**
-     Beacons oredered by Major
+     Beacons ordered by Major
      */
     KTKBeaconsOrderByMajor,
     
     /**
-     Beacons oredered by Minor
+     Beacons ordered by Minor
      */
     KTKBeaconsOrderByMinor,
     
     /**
-     Beacons oredered by TX Power
+     Beacons ordered by TX Power
      */
     KTKBeaconsOrderByTxPower
 };

@@ -48,8 +48,8 @@ typedef NS_ENUM(int, KTKBeaconDeviceFirmwareUpdateState) {
  Updates beacon firmware. This methods is blocking and waits for operation to finish.
  
  @param firmware firmware
- @param masterPassword password required to update beacons firmware, this passwod is different than regular password used to connect to the beacon
- @param progressHandler block of code that is invoked to give a feedback about update progress, if state parameter is KTKBeaconDeviceFirmwareUpdateStateUploading then progress parameters contains value between 0 nad 1 that indicates progress of firmare upload process
+ @param masterPassword password required to update beacons firmware, this passwoed is different than regular password used to connect to the beacon
+ @param progressHandler block of code that is invoked to give a feedback about update progress, if state parameter is KTKBeaconDeviceFirmwareUpdateStateUploading then progress parameters contains value between 0 nad 1 that indicates progress of firmware upload process
  
  @return error if operation fails
  */

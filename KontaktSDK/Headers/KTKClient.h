@@ -217,7 +217,7 @@ extern NSString *const kKTKTimestamp;
 - (NSArray *)beaconsWithError:(NSError **)error;
 
 /**
- Returns array of beacons which are the properties of manager whose Api-Key is provided
+ Returns array of beacons which are the properties of manager whose API-Key is provided
  
  @param paging  object which determines set of data that should be returned
  @param error   error if operation fails
@@ -466,7 +466,7 @@ extern NSString *const kKTKTimestamp;
 - (NSArray *)devicesByManagerUUID:(NSString *)managerUUID andType:(KTKDeviceType)deviceType withError:(NSError **)error;
 
 /**
- Returns array of devices which are the properties of current(by Api-Key) manager and they match requested type
+ Returns array of devices which are the properties of current(by API-Key) manager and they match requested type
  
  @param deviceType  describes which (type of) devices should be returned
  @param error       error if operation fails
@@ -488,7 +488,7 @@ extern NSString *const kKTKTimestamp;
 - (NSArray *)devicesPaged:(KTKPagingDevices *)paging byManagerUUID:(NSString *)managerUUID andType:(KTKDeviceType)deviceType withError:(NSError **)error;
 
 /**
- Returns set(paged) of devices which are the properties of current(by Api-Key) manager and they match requested type
+ Returns set(paged) of devices which are the properties of current(by API-Key) manager and they match requested type
  
  @param paging      object which determines set of device that will be returned
  @param deviceType  describes which (type of) devices should be returned
@@ -687,7 +687,7 @@ extern NSString *const kKTKTimestamp;
  @param config  configuration of beacon that we want to apply
  @param error   error if operation fails
  
- @return true if configuartion was created
+ @return true if configuration was created
  */
 - (BOOL)createBeaconConfig:(KTKBeacon *)config withError:(NSError **)error __deprecated_msg("Use - (BOOL)configCreateForBeacon:(KTKBeacon *)config withError:(NSError **)error");
 
@@ -780,7 +780,7 @@ extern NSString *const kKTKTimestamp;
 - (KTKUser *)getAuthenticatedUserByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error __deprecated_msg("Use - (KTKManager *)managerAuthenticatedByEmail:(NSString *)email andPassword:(NSString *)password withError:(NSError **)error");
 
 /**
- Authenticates Manager by email and password and returns Manager object with his Api-Key etc.
+ Authenticates Manager by email and password and returns Manager object with his API-Key etc.
  
  @param email       user's email
  @param password    user's password
@@ -1000,7 +1000,7 @@ extern NSString *const kKTKTimestamp;
 
 /**
  Returns array of venues(KTKVenue objects) for currently logged in manager + public ones
- Can return only public ones if no one is logged in and public ApiKey is provided
+ Can return only public ones if no one is logged in and public APIKey is provided
  
  @param error error if operation fails
  

@@ -9,7 +9,7 @@
 #import "KTKBluetoothManager.h"
 
 /**
- Allows to easily sarch for nearby beacon devices.
+ Allows to easily search for nearby beacon devices.
  */
 @interface KTKBeaconManager : KTKBluetoothManager
 

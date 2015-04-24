@@ -72,7 +72,7 @@ typedef NS_ENUM(int, KTKErrorCode) {
 };
 
 /**
- This class represents error returend by SKD methods.
+ This class represents error returned by SDK methods.
  */
 @interface KTKError : NSError
 
@@ -88,7 +88,7 @@ typedef NS_ENUM(int, KTKErrorCode) {
 + (BOOL)doesError:(NSError *)error haveCode:(KTKErrorCode)code;
 
 /**
- Creates and return new KTKError object wiht provided error code.
+ Creates and return new KTKError object with provided error code.
  
  @param code error code
  @return new KTKError object

@@ -24,7 +24,7 @@
 @end
 
 /**
- Allows to easily sarch for nearby bluetooth devices.
+ Allows to easily search for nearby bluetooth devices.
  */
 @interface KTKBluetoothManager : NSObject
 

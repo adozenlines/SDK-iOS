@@ -15,47 +15,47 @@
 typedef NS_ENUM(NSUInteger, KTKDevicesOrderBy)
 {    
     /**
-     Devices oredered by Created date - default
+     Devices ordered by Created date - default
      */
     KTKDevicesOrderByCreated,
     
     /**
-     Devices oredered by Updated date
+     Devices ordered by Updated date
      */
     KTKDevicesOrderByUpdated,
     
     /**
-     Devices oredered by Name
+     Devices ordered by Name
      */
     KTKDevicesOrderByName,
     
     /**
-     Devices oredered by ID
+     Devices ordered by ID
      */
     KTKDevicesOrderById,
     
     /**
-     Devices oredered by Unique ID
+     Devices ordered by Unique ID
      */
     KTKDevicesOrderByUniqueId,
     
     /**
-     Devices oredered by Proximity
+     Devices ordered by Proximity
      */
     KTKDevicesOrderByProximity,
     
     /**
-     Devices oredered by Major
+     Devices ordered by Major
      */
     KTKDevicesOrderByMajor,
     
     /**
-     Devices oredered by Minor
+     Devices ordered by Minor
      */
     KTKDevicesOrderByMinor,
     
     /**
-     Devices oredered by TX Power
+     Devices ordered by TX Power
      */
     KTKDevicesOrderByTxPower
 };

@@ -21,7 +21,7 @@
 @property (strong, nonatomic, readonly) NSString *alias;
 
 /**
- Firmwave revision number. By defaul this property is nil but you can assign new value to change it.
+ Firmwave revision number. By default this property is nil but you can assign new value to change it.
  */
 @property (strong, nonatomic, readonly) NSString *firmware;
 
@@ -36,7 +36,7 @@
 @property (strong, nonatomic, readonly) NSNumber *major;
 
 /**
- Miorn number of the beacon.
+ Minor number of the beacon.
  */
 @property (strong, nonatomic, readonly) NSNumber *minor;
 
@@ -51,7 +51,7 @@
 @property (strong, nonatomic, readonly) NSString *uniqueID;
 
 /**
- Password for the beacon. By defaul this property is nil but you can assign new value to change it.
+ Password for the beacon. By default this property is nil but you can assign new value to change it.
  */
 @property (strong, nonatomic, readonly) NSString *password;
 
