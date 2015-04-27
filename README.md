@@ -6,3 +6,6 @@ To start using Kontakt.io iOS SDK please refer to our [Quick Start]( http://docs
 ```
 pod 'KontaktSDK'
 ```
+
+### LICENSE
+See the LICENSE file.
