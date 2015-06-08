@@ -299,7 +299,7 @@ extern NSString *const kKTKTimestamp;
  Returns beacon for specified UUID, major, minor and published parameteres.
  It can be used as PUBLIC(with public API key) and has the same effect as used with private/user's API key and isPublished = true
  
- @param UUID    beacon's UUID
+ @param UUID    beacon's proximity UUID
  @param major   beacon's major number
  @param minor   beacon's minor number
  @param isPublished boolean value which tells if beacon is publicly accessible
@@ -314,7 +314,7 @@ extern NSString *const kKTKTimestamp;
  Has the same effect as similiar/above method with isPublished = false.
  It can be used as PUBLIC(with public API key).
  
- @param UUID    beacon's UUID
+ @param UUID    beacon's proximity UUID
  @param major   beacon's major number
  @param minor   beacon's minor number
  @param error   error if operation fails

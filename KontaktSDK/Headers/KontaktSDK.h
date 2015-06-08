@@ -7,7 +7,7 @@
 //
 
 
-#define KONTAKT_SDK_VERSION @"5.4"
+#define KONTAKT_SDK_VERSION @"5.5"
 
 //API
 #import "KTKClient.h"
@@ -38,7 +38,7 @@
 #import "KTKUUIDConverter.h"
 
 //Beacons
-#import "KTKBeaconDeviceV2.h"
+#import "KTKBeaconDevice.h"
 #import "KTKBeaconManager.h"
 
 //Microlocation

@@ -8,7 +8,24 @@
 
 #import "KTKBluetoothDevice.h"
 
-@class KTKBluetoothManager;
+
+/**
+ Possible states of firmware update process.
+ */
+typedef NS_ENUM(int, KTKBeaconDeviceFirmwareUpdateState) {
+    /**
+     Beacon is being prepared for firmware update.
+     */
+    KTKBeaconDeviceFirmwareUpdateStatePreparing,
+    
+    /**
+     Firmware is being uploaded to beacon.
+     */
+    KTKBeaconDeviceFirmwareUpdateStateUploading,
+};
+
+
+@class KTKBluetoothManager, KTKFirmware;
 
 /**
  Represents Kontakt beacon device.
@@ -25,12 +42,22 @@
 /**
  Logic value indicating if beacon is locked.
  */
-@property (assign, nonatomic, readonly) BOOL locked;
+@property (nonatomic, readonly) BOOL locked;
 
 /**
  Unique identifier of a beacon.
  */
-@property (copy, nonatomic, readonly) NSString *uniqueID;
+@property (nonatomic, readonly) NSString *uniqueID;
+
+/**
+ Percentage value of battery state.
+ */
+@property (nonatomic, readonly) NSUInteger batteryLevel;
+
+/**
+ Firmware version number
+ */
+@property (nonatomic, readonly) NSDecimalNumber *firmwareVersion;
 
 #pragma mark - public methods
 
@@ -94,5 +121,31 @@
  @return service descriptor
  */
 - (KTKServiceDescriptor *)serviceDescriptorWithType:(NSString *)type;
+
+/**
+ Updates beacon firmware. This methods is blocking and waits for operation to finish.
+ 
+ @param firmware firmware
+ @param masterPassword password required to update beacons firmware, this passwoed is different than regular password used to connect to the beacon
+ @param progressHandler block of code that is invoked to give a feedback about update progress, if state parameter is KTKBeaconDeviceFirmwareUpdateStateUploading then progress parameters contains value between 0 nad 1 that indicates progress of firmware upload process
+ 
+ @return error if operation fails
+ */
+- (NSError *)updateFirmware:(KTKFirmware *)firmware
+        usingMasterPassword:(NSString *)masterPassword
+            progressHandler:(void (^)(KTKBeaconDeviceFirmwareUpdateState state, int progress))progressHandler;
+
+/**
+ Updates beacon firmware if beacon is in DFU mode. This methods is non-blocking.
+ 
+ @param firmware        firmware object
+ @param progressHandler block of code that is invoked to give a feedback about update progress,
+ if state parameter is KTKBeaconDeviceFirmwareUpdateStateUploading then progress parameters
+ contains value between 0 nad 1 that indicates progress of firmare upload process
+ 
+ @return error if operation fails
+ */
+- (NSError *)updateFirmwareForDfu:(KTKFirmware *)firmware
+              withProgressHandler:(void (^)(KTKBeaconDeviceFirmwareUpdateState, int))progressHandler;
 
 @end
